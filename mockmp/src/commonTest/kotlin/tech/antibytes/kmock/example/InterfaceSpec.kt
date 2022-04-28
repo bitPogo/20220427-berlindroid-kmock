@@ -14,7 +14,7 @@ import tech.antibytes.util.test.fixture.kotlinFixture
 import kotlin.js.JsName
 import kotlin.test.Test
 
-@UsesMocks(BenchmarkContract.Interface::class,)
+@UsesMocks(Interface::class,)
 class InterfaceSpec {
     private val fixture = kotlinFixture()
 
@@ -23,7 +23,7 @@ class InterfaceSpec {
     fun `It runs Interface`() {
         // Given
         val mocker = Mocker()
-        val instance = MockInterface0(mocker)
+        val instance = MockInterface(mocker)
         val arg0: Int = fixture.fixture()
         val arg1: Any = fixture.fixture()
 

@@ -14,7 +14,15 @@ import tech.antibytes.util.test.fixture.kotlinFixture
 import kotlin.js.JsName
 import kotlin.test.Test
 
-@MockCommon(Interface::class,)
+interface Interface2{
+    fun doSomething(): Int
+    fun doSomethingElse(arg0: Int, arg1: Any): Int
+    fun doAnything(): Any
+    fun doAnythingElse(arg0: Int, arg1: Any): Any
+    fun doNothing(): Unit
+}
+
+@MockCommon(Interface2::class,)
 class InterfaceSpec {
     private val fixture = kotlinFixture()
 
@@ -23,19 +31,23 @@ class InterfaceSpec {
     fun `It runs Interface`() {
         // Given
         val asserter = Asserter()
-        val instance: InterfaceMock = kmock(verifier = asserter)
+        val instance: Interface2Mock = kmock(verifier = asserter)
         val arg0: Int = fixture.fixture()
         val arg1: Any = fixture.fixture()
 
         instance._doSomething.returnValue = fixture.fixture()
-        instance._doSomethingElse.returnValue = fixture.fixture()
+        instance._doSomethingElse.sideEffect = { int, _ ->
+            println(int)
+
+            23
+        }
         instance._doAnything.returnValue = fixture.fixture()
         instance._doAnythingElse.returnValue = fixture.fixture()
         instance._doNothing.returnValue = fixture.fixture()
 
         // When
         instance.doSomething()
-        instance.doSomethingElse(arg0, arg1)
+        println(instance.doSomethingElse(42, arg1))
         instance.doAnything()
         instance.doAnythingElse(arg0, arg1)
         instance.doNothing()
@@ -43,7 +55,7 @@ class InterfaceSpec {
         // Then
         asserter.assertOrder {
             instance._doSomething.hasBeenStrictlyCalledWith()
-            instance._doSomethingElse.hasBeenStrictlyCalledWith(arg0, arg1)
+            instance._doSomethingElse.hasBeenStrictlyCalledWith(42, arg1)
             instance._doAnything.hasBeenStrictlyCalledWith()
             instance._doAnythingElse.hasBeenStrictlyCalledWith(arg0, arg1)
             instance._doNothing.hasBeenStrictlyCalledWith()
