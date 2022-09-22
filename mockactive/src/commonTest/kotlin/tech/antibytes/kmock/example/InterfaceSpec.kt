@@ -12,10 +12,10 @@ import io.mockative.given
 import io.mockative.mock
 import io.mockative.time
 import io.mockative.verify
-import tech.antibytes.util.test.fixture.fixture
-import tech.antibytes.util.test.fixture.kotlinFixture
 import kotlin.js.JsName
 import kotlin.test.Test
+import tech.antibytes.kfixture.fixture
+import tech.antibytes.kfixture.kotlinFixture
 
 class InterfaceSpec {
     private val fixture = kotlinFixture()

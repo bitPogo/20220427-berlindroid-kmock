@@ -17,7 +17,7 @@ include(
     ":warmup",
     ":mockactive",
     ":mockmp",
-    ":kmock",
+    ":kmock"
 )
 
 buildCache {

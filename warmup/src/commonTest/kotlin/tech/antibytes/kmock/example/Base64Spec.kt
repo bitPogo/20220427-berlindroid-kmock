@@ -1,15 +1,13 @@
 package tech.antibytes.kmock.example
 
-import tech.antibytes.util.test.annotations.IgnoreJs
+import kotlin.js.JsName
+import kotlin.test.Test
+import tech.antibytes.kfixture.fixture
+import tech.antibytes.kfixture.kotlinFixture
 import tech.antibytes.util.test.annotations.RobolectricConfig
 import tech.antibytes.util.test.annotations.RobolectricTestRunner
 import tech.antibytes.util.test.annotations.RunWithRobolectricTestRunner
-import tech.antibytes.util.test.fixture.fixture
-import tech.antibytes.util.test.fixture.kotlinFixture
-import tech.antibytes.util.test.mustBe
-import kotlin.js.JsName
-import kotlin.test.Test
-import kotlin.test.assertEquals
+import tech.antibytes.util.test.isNot
 
 @RobolectricConfig(manifest = "--none")
 @RunWithRobolectricTestRunner(RobolectricTestRunner::class)
@@ -18,7 +16,7 @@ class Base64Spec {
 
     @Test
     @JsName("fn0")
-    fun `Given a things dependend on Robolectric it works in common code`() {
+    fun `Given a things dependent on Robolectric it works in common code`() {
         // Given
         val data = "The quick brown fox jumps over the lazy dog"
 
@@ -26,6 +24,6 @@ class Base64Spec {
         val actual = Base64.encode(data.encodeToByteArray())
 
         // Then
-        actual mustBe fixture.fixture()
+        actual isNot fixture.fixture()
     }
 }

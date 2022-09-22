@@ -6,7 +6,6 @@
 
 package tech.antibytes.kmock.example
 
-
 interface Interface {
     fun doSomething(): Int
     fun doSomethingElse(arg0: Int, arg1: Any): Int

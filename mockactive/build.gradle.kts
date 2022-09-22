@@ -6,13 +6,13 @@
 
 import tech.antibytes.gradle.dependency.Dependency
 import tech.antibytes.kmock.example.dependency.Dependency as LocalDependency
-import tech.antibytes.gradle.kmock.KMockExtension
 import org.jetbrains.kotlin.gradle.tasks.Kotlin2JsCompile
 import org.jetbrains.kotlin.gradle.tasks.KotlinTest
 import org.jetbrains.kotlin.gradle.tasks.KotlinNativeCompile
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
+import tech.antibytes.gradle.configuration.ensureIosDeviceCompatibility
 
 plugins {
     id("org.jetbrains.kotlin.multiplatform")
@@ -28,14 +28,16 @@ plugins {
 kotlin {
     android()
 
-    js(IR) {
+    /*js(BOTH) {
         nodejs()
         browser()
-    }
+    }*/
 
     jvm()
 
     ios()
+    iosSimulatorArm64()
+    ensureIosDeviceCompatibility()
 
     sourceSets {
         removeAll { sourceSet ->
@@ -85,7 +87,7 @@ kotlin {
             }
         }
 
-        val jsMain by getting {
+        /*val jsMain by getting {
             dependencies {
                 dependsOn(commonMain)
                 implementation(Dependency.multiplatform.kotlin.js)
@@ -98,7 +100,7 @@ kotlin {
 
                 implementation(Dependency.multiplatform.test.js)
             }
-        }
+        }*/
 
         val jvmMain by getting {
             dependencies {
@@ -130,6 +132,7 @@ kotlin {
 dependencies {
     add("kspJvmTest", LocalDependency.mockative.processor)
     add("kspAndroidTest", LocalDependency.mockative.processor)
-    add("kspJsTest", LocalDependency.mockative.processor)
+//    add("kspJsTest", LocalDependency.mockative.processor)
     add("kspIosX64Test", LocalDependency.mockative.processor)
+    add("kspIosSimulatorArm64Test", LocalDependency.mockative.processor)
 }

@@ -6,7 +6,7 @@
 
 import tech.antibytes.gradle.dependency.Dependency
 import tech.antibytes.kmock.example.dependency.Dependency as LocalDependency
-import tech.antibytes.gradle.kmock.KMockExtension
+import tech.antibytes.gradle.configuration.ensureIosDeviceCompatibility
 
 plugins {
     id("org.jetbrains.kotlin.multiplatform")
@@ -16,7 +16,7 @@ plugins {
 
     id("tech.antibytes.gradle.configuration")
 
-    id("tech.antibytes.kmock.kmock-gradle") apply false
+    id("tech.antibytes.kmock.kmock-gradle")
 }
 
 kotlin {
@@ -30,6 +30,8 @@ kotlin {
     jvm()
 
     ios()
+    iosSimulatorArm64()
+    ensureIosDeviceCompatibility()
 
     sourceSets {
         removeAll { sourceSet ->
@@ -119,8 +121,6 @@ kotlin {
     }
 }
 
-plugins.apply("tech.antibytes.kmock.kmock-gradle")
-
-project.extensions.configure<KMockExtension>("kmock") {
+kmock {
     rootPackage = "tech.antibytes.kmock.example"
 }

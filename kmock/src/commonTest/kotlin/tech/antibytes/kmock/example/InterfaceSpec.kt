@@ -6,15 +6,15 @@
 
 package tech.antibytes.kmock.example
 
+import kotlin.js.JsName
+import kotlin.test.Test
+import tech.antibytes.kfixture.fixture
+import tech.antibytes.kfixture.kotlinFixture
 import tech.antibytes.kmock.MockCommon
 import tech.antibytes.kmock.verification.Asserter
 import tech.antibytes.kmock.verification.assertOrder
-import tech.antibytes.util.test.fixture.fixture
-import tech.antibytes.util.test.fixture.kotlinFixture
-import kotlin.js.JsName
-import kotlin.test.Test
 
-interface Interface2{
+interface Interface2 {
     fun doSomething(): Int
     fun doSomethingElse(arg0: Int, arg1: Any): Int
     fun doAnything(): Any
@@ -22,7 +22,7 @@ interface Interface2{
     fun doNothing(): Unit
 }
 
-@MockCommon(Interface2::class,)
+@MockCommon(Interface2::class)
 class InterfaceSpec {
     private val fixture = kotlinFixture()
 
@@ -31,7 +31,7 @@ class InterfaceSpec {
     fun `It runs Interface`() {
         // Given
         val asserter = Asserter()
-        val instance: Interface2Mock = kmock(verifier = asserter)
+        val instance: Interface2Mock = kmock(collector = asserter)
         val arg0: Int = fixture.fixture()
         val arg1: Any = fixture.fixture()
 

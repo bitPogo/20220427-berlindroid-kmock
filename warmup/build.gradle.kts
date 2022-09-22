@@ -6,7 +6,7 @@
 
 import tech.antibytes.gradle.dependency.Dependency
 import tech.antibytes.kmock.example.dependency.Dependency as LocalDependency
-import tech.antibytes.gradle.kmock.KMockExtension
+import tech.antibytes.gradle.configuration.ensureIosDeviceCompatibility
 
 plugins {
     id("org.jetbrains.kotlin.multiplatform")
@@ -16,7 +16,7 @@ plugins {
 
     id("tech.antibytes.gradle.configuration")
 
-    id("tech.antibytes.kmock.kmock-gradle") apply false
+    id("tech.antibytes.kmock.kmock-gradle")
 }
 
 kotlin {
@@ -30,6 +30,8 @@ kotlin {
     jvm()
 
     ios()
+    iosSimulatorArm64()
+    ensureIosDeviceCompatibility()
 
     linuxX64()
 
@@ -179,17 +181,16 @@ kotlin {
             }
         }
 
-        val iosX64Test by getting {
-            dependencies {
-                dependsOn(iosTest)
-            }
+        val iosSimulatorArm64Main by getting {
+            dependsOn(iosMain)
+        }
+        val iosSimulatorArm64Test by getting {
+            dependsOn(iosTest)
         }
     }
 }
 
-plugins.apply("tech.antibytes.kmock.kmock-gradle")
-
-project.extensions.configure<KMockExtension>("kmock") {
+kmock {
     rootPackage = "tech.antibytes.kmock.example"
     spyOn = setOf(
         "tech.antibytes.kmock.example.contract.ExampleContract.SampleDomainObject"

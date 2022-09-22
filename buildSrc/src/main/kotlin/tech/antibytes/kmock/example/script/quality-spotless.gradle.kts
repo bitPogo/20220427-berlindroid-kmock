@@ -42,11 +42,16 @@ plugins {
 spotless {
     kotlin {
         target("**/*.kt")
-        targetExclude("buildSrc/build/", "**/buildSrc/build/")
-        ktlint(Version.gradle.ktLint).userData(
+        targetExclude(
+            "buildSrc/build/",
+            "**/buildSrc/build/",
+        )
+        ktlint(Version.gradle.ktLint).editorConfigOverride(
             mapOf(
-                "disabled_rules" to "no-wildcard-imports",
-                "ij_kotlin_imports_layout" to "*"
+                "ktlint_disabled_rules" to "no-wildcard-imports",
+                "ij_kotlin_imports_layout" to "*",
+                "ij_kotlin_allow_trailing_comma" to "true",
+                "ij_kotlin_allow_trailing_comma_on_call_site" to "true",
             )
         )
         trimTrailingWhitespace()
